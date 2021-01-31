@@ -5,29 +5,37 @@ using UnityEngine;
 public class MovementPath : MonoBehaviour
 {
     [SerializeField] private GameObject[] pathElements;
-
     private PointSettings pointSettings;
-    private GameObject[] pos;
+    private GameObject[] nextPoint;
+
     private void OnDrawGizmos()
     {
-        for (int i = 0; i < pathElements.Length; i++)
+        if (pathElements != null)
         {
-            pointSettings = pathElements[i].GetComponent<PointSettings>();
-            pos = pointSettings.nextPoints;
-            if (pos != null)
+            for (int i = 0; i < pathElements.Length; i++)
             {
-                if (pos.Length == 1)
+                pointSettings = pathElements[i].GetComponent<PointSettings>();
+                nextPoint = pointSettings.nextPoints;
+
+                if (nextPoint != null)
                 {
-                    Gizmos.DrawLine(pathElements[i].transform.position, pos[0].transform.position);
-                }
-                else
-                {
-                    for(int j = 0; j < pos.Length; j++)
+                    if (nextPoint.Length == 1)
+                    { // Default point
+                        Gizmos.DrawLine(pathElements[i].transform.position, nextPoint[0].transform.position);
+                    }
+                    else
                     {
-                        Gizmos.DrawLine(pathElements[i].transform.position, pos[j].transform.position);
+                        for (int j = 0; j < nextPoint.Length; j++)
+                        { // Branching point
+                            Gizmos.DrawLine(pathElements[i].transform.position, nextPoint[j].transform.position);
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            Debug.Log("Points not founded");
         }
     }
 }

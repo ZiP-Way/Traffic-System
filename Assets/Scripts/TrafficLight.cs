@@ -9,6 +9,7 @@ public class TrafficLight : MonoBehaviour
     [SerializeField] private GameObject lamp;
 
     private Renderer lamp_renderer;
+    private GameObject car;
 
     private void Start()
     {
@@ -18,7 +19,11 @@ public class TrafficLight : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Gi");
+        if (!isGreenColor)
+        {
+            car = other.gameObject;
+            car.GetComponent<Car>().IsMoving = false;
+        }
     }
 
     private IEnumerator TimerToChangeColor()
@@ -26,6 +31,13 @@ public class TrafficLight : MonoBehaviour
         ChangeLampColor();
         yield return new WaitForSeconds(timeToChangeColor);
         isGreenColor = !isGreenColor;
+
+        if(car != null)
+        {
+            car.GetComponent<Car>().IsMoving = true;
+            car = null;
+        }
+
         StartCoroutine(TimerToChangeColor());
     }
 
