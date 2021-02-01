@@ -9,12 +9,14 @@ public class TrafficLight : MonoBehaviour
     [SerializeField] private GameObject lamp;
 
     private Renderer lamp_renderer;
+    private BoxCollider collider;
     private GameObject car;
 
     private void Start()
     {
         lamp_renderer = lamp.GetComponent<Renderer>();
-        StartCoroutine(TimerToChangeColor());
+        collider = GetComponent<BoxCollider>();
+        StartCoroutine(TrafficLightTimer());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,7 +28,7 @@ public class TrafficLight : MonoBehaviour
         }
     }
 
-    private IEnumerator TimerToChangeColor()
+    private IEnumerator TrafficLightTimer()
     {
         ChangeLampColor();
         yield return new WaitForSeconds(timeToChangeColor);
@@ -38,11 +40,12 @@ public class TrafficLight : MonoBehaviour
             car = null;
         }
 
-        StartCoroutine(TimerToChangeColor());
+        StartCoroutine(TrafficLightTimer());
     }
 
     private void ChangeLampColor()
     {
         lamp_renderer.material.color = isGreenColor ? Color.green : Color.red;
+        collider.enabled = isGreenColor ? false : true;
     }
 }

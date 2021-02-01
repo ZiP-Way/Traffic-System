@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovementPath : MonoBehaviour
 {
     [SerializeField] private GameObject[] pathElements;
+
     private PointSettings pointSettings;
     private GameObject[] nextPoint;
 
@@ -15,7 +16,7 @@ public class MovementPath : MonoBehaviour
             for (int i = 0; i < pathElements.Length; i++)
             {
                 pointSettings = pathElements[i].GetComponent<PointSettings>();
-                nextPoint = pointSettings.nextPoints;
+                nextPoint = pointSettings.NextPoints;
 
                 if (nextPoint != null)
                 {

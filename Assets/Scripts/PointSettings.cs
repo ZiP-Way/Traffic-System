@@ -4,5 +4,13 @@ using UnityEngine;
 
 public class PointSettings : MonoBehaviour
 {
-    public GameObject[] nextPoints;
+    public GameObject[] NextPoints
+    {
+        get
+        {
+            return nextPoints;
+        }
+    }
+
+    [SerializeField] private GameObject[] nextPoints;
 }
