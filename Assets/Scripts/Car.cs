@@ -40,9 +40,16 @@ public class Car : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.distance < distanceOfDetection)
+            if (hit.collider.gameObject.CompareTag("TrafficLight"))
             {
-                if (hit.collider.gameObject.CompareTag("Car") || hit.collider.gameObject.CompareTag("TrafficLight"))
+                if (hit.distance < distanceOfDetection - 2)
+                {
+                    IsMoving = false;
+                }
+            }
+            if (hit.collider.gameObject.CompareTag("Car"))
+            {
+                if (hit.distance < distanceOfDetection)
                 {
                     IsMoving = false;
                 }
