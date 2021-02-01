@@ -111,7 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsMoving: 0
-  speed: 0.05
+  speed: 0.1
+  distanceOfDetection: 3
 --- !u!54 &176340608558384665
 Rigidbody:
   m_ObjectHideFlags: 0

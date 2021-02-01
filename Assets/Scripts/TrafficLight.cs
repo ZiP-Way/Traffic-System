@@ -10,7 +10,6 @@ public class TrafficLight : MonoBehaviour
 
     private Renderer lamp_renderer;
     private BoxCollider collider;
-    private GameObject car;
 
     private void Start()
     {
@@ -19,26 +18,11 @@ public class TrafficLight : MonoBehaviour
         StartCoroutine(TrafficLightTimer());
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!isGreenColor)
-        {
-            car = other.gameObject;
-            car.GetComponent<Car>().IsMoving = false;
-        }
-    }
-
     private IEnumerator TrafficLightTimer()
     {
         ChangeLampColor();
         yield return new WaitForSeconds(timeToChangeColor);
         isGreenColor = !isGreenColor;
-
-        if(car != null)
-        {
-            car.GetComponent<Car>().IsMoving = true;
-            car = null;
-        }
 
         StartCoroutine(TrafficLightTimer());
     }

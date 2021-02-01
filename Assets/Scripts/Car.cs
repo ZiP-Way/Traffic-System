@@ -4,6 +4,7 @@ public class Car : MonoBehaviour
 {
     [HideInInspector] public bool IsMoving;
     [SerializeField] private float speed;
+    [SerializeField] private float distanceOfDetection;
 
     private PointSettings pointSettings;
     private Renderer carRenderer;
@@ -31,23 +32,21 @@ public class Car : MonoBehaviour
 
     private void CheckObstacle()
     {
+        IsMoving = true;
+
         Ray ray = new Ray(transform.position, transform.forward);
-        Debug.DrawRay(transform.position, transform.forward * 3, Color.yellow);
+        Debug.DrawRay(transform.position, transform.forward * distanceOfDetection, Color.yellow);
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.distance < 3)
+            if (hit.distance < distanceOfDetection)
             {
                 if (hit.collider.gameObject.CompareTag("Car") || hit.collider.gameObject.CompareTag("TrafficLight"))
                 {
                     IsMoving = false;
                 }
             }
-        }
-        else
-        {
-            IsMoving = true;
         }
     }
 
